@@ -1,65 +1,49 @@
 <template>
-  <!--  <el-affix target=".right" :offset="100">-->
-  <div class="common-dept">
-    <div class="title">
-      <div class="text">常见科室</div>
+  <el-affix target=".right" :offset="100">
+    <div class="common-dept">
+      <div class="title">
+        <div class="text">常见科室</div>
 
-      <div class="all">
-        全部
-        <el-icon><ArrowRightBold /></el-icon>
+        <div class="all">
+          全部
+          <el-icon><ArrowRightBold /></el-icon>
+        </div>
+      </div>
+      <div class="dept-list">
+        <div class="dept-list__item" v-for="item in 12">神经内科</div>
       </div>
     </div>
-    <div class="dept-list">
-      <div class="dept-list__item" v-for="item in 12">神经内科</div>
-    </div>
-  </div>
-  <div class="space">
-    <div class="title">
-      <div class="text">平台公告</div>
-      <div class="all">
-        全部
-        <el-icon><ArrowRightBold /></el-icon>
+    <div class="space">
+      <div class="title">
+        <div class="text">平台公告</div>
+        <div class="all">
+          全部
+          <el-icon><ArrowRightBold /></el-icon>
+        </div>
+      </div>
+      <div class="space-list">
+        <div class="notice-wrapper" v-for="item in 3">
+          <div class="point"></div>
+          <span>关于延长北京大学国关于延长北京大学国</span>
+        </div>
       </div>
     </div>
-    <div class="space-list">
-      <div class="notice-wrapper">
-        <div class="point"></div>
-        <span>关于延长北京大学国关于延长北京大学国</span>
+    <div class="space suspend-notice-list">
+      <div class="title">
+        <div class="text">平台公告</div>
+        <div class="all">
+          全部
+          <el-icon><ArrowRightBold /></el-icon>
+        </div>
       </div>
-      <div class="notice-wrapper">
-        <div class="point"></div>
-        <span>关于延长北京大学国关于延长北京大学国</span>
-      </div>
-      <div class="notice-wrapper">
-        <div class="point"></div>
-        <span>关于延长北京大学国关于延长北京大学国</span>
-      </div>
-    </div>
-  </div>
-  <div class="space suspend-notice-list">
-    <div class="title">
-      <div class="text">平台公告</div>
-      <div class="all">
-        全部
-        <el-icon><ArrowRightBold /></el-icon>
+      <div class="space-list">
+        <div class="notice-wrapper" v-for="item in 3">
+          <div class="point"></div>
+          <span>关于延长北京大学国关于延长北京大学国</span>
+        </div>
       </div>
     </div>
-    <div class="space-list">
-      <div class="notice-wrapper">
-        <div class="point"></div>
-        <span>关于延长北京大学国关于延长北京大学国</span>
-      </div>
-      <div class="notice-wrapper">
-        <div class="point"></div>
-        <span>关于延长北京大学国关于延长北京大学国</span>
-      </div>
-      <div class="notice-wrapper">
-        <div class="point"></div>
-        <span>关于延长北京大学国关于延长北京大学国</span>
-      </div>
-    </div>
-  </div>
-  <!--  </el-affix>-->
+  </el-affix>
 </template>
 
 <script setup lang="ts">

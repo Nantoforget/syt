@@ -7,6 +7,7 @@ import Components from "unplugin-vue-components/vite";
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 
 // https://vitejs.dev/config/
+
 export default defineConfig({
   plugins: [
     vue(),
@@ -21,6 +22,16 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": resolve(__dirname, "src")
+    }
+  },
+  // vite配置代理
+  server: {
+    proxy: {
+      "/api": {
+        target: "http://syt.atguigu.cn",
+        changeOrigin: true
+        // rewrite: (path) => path.replace(/^\/api/, "")
+      }
     }
   }
 });
