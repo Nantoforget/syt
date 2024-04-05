@@ -17,11 +17,14 @@
     </div>
   </div>
   <div class="bottom">
-    <div class="card">
+    <div class="card" v-for="item in 10">
       <div class="info">
         <div class="hospital-title">北京人民医院</div>
         <div class="bottom-container">
-          <div class="icon-wrapper">三级甲等</div>
+          <div class="icon-wrapper">
+            <el-icon><Histogram /></el-icon>
+            三级甲等
+          </div>
           <div class="icon-wrapper">
             <el-icon><Clock /></el-icon>
             每天08:30放号
@@ -39,7 +42,7 @@
 </template>
 
 <script setup lang="ts">
-import { Clock } from "@element-plus/icons-vue";
+import { Clock, Histogram } from "@element-plus/icons-vue";
 </script>
 
 <script lang="ts">
@@ -50,21 +53,38 @@ export default {
 
 <style scoped lang="scss">
 .top {
+  width: 100%;
+  box-sizing: border-box;
   .text {
-    font-size: 20px;
+    font-size: 16px;
     font-weight: bold;
     margin: 30px 0;
+    font-family:
+      Helvetica Neue,
+      Helvetica,
+      Arial,
+      PingFang SC,
+      Hiragino Sans GB,
+      Heiti SC,
+      Microsoft YaHei,
+      WenQuanYi Micro Hei,
+      sans-serif;
   }
   .check {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
     color: #999;
+    .title {
+      margin-right: 20px;
+    }
     .list {
       flex: 1;
       color: #666 !important;
+      flex-wrap: wrap;
+      margin-right: -26px;
       :deep(.el-link) {
-        margin: 0 0 10px 26px;
+        margin: 0 26px 10px 0;
       }
       .checked {
         color: #4490f1;
@@ -74,10 +94,60 @@ export default {
   }
 }
 .bottom {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  box-sizing: border-box;
   .card {
+    width: 440px;
+    height: 98px;
+    display: grid;
+    grid-template-columns: auto 100px;
+    align-items: center;
+    box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.04);
+    margin-top: 20px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    .info {
+      display: grid;
+      grid-template-rows: 60px 40px;
+      align-items: center;
+      margin-left: 20px;
+      .hospital-title {
+        color: #333;
+        font-size: 16px;
+      }
+      .bottom-container {
+        display: grid;
+        grid-template-columns: auto auto;
+        font-size: 14px;
+        color: #999;
+        .icon-wrapper {
+          display: flex;
+          align-items: center;
+          :deep(.el-icon) {
+            margin-right: 4px;
+          }
+        }
+      }
+    }
     .img {
       width: 80px;
       height: 80px;
+      img {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+      }
+    }
+  }
+  .card:hover {
+    box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.1);
+    .hospital-title {
+      font-weight: bold;
+    }
+    .img {
+      width: 85px;
+      height: 85px;
       img {
         width: 100%;
         height: 100%;

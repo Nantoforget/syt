@@ -33,6 +33,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+
   .el-input__icon {
     height: 100%;
   }
@@ -48,7 +49,7 @@ export default {
     border: none;
   }
   :deep(.el-button) {
-    height: 45px;
+    height: 47px;
     color: #4490f1;
     border: none;
     border-bottom: 2px solid #eee;

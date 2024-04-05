@@ -13,8 +13,8 @@
         </el-input>
       </div>
       <div class="top-right">
-        <div class="help">帮助中心</div>
-        <div class="login">登录/注册</div>
+        <div class="help my-link">帮助中心</div>
+        <div class="login my-link">登录/注册</div>
       </div>
     </div>
   </div>

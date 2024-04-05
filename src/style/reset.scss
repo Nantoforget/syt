@@ -5,6 +5,10 @@
 
   outline: none;
 }
+html{
+  width: 100vw;
+  height: 100vh;
+}
 
 html,
 body,
@@ -179,4 +183,10 @@ code,
 pre {
   font-family: monospace, monospace;
   font-size: 1em;
+}
+.my-link{
+  cursor: pointer;
+}
+.my-link:hover{
+  color:#7eabff;
 }

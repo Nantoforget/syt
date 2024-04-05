@@ -12,11 +12,12 @@
 
 <style scoped lang="scss">
 .app {
-  width: 100%;
   .main {
     width: 1200px;
-    padding: 70px 0 50px 0;
-    margin: 0 auto;
+    min-height: 800px;
+    margin: 70px auto;
+    box-sizing: content-box;
+    padding-bottom: 70px;
   }
 }
 </style>
