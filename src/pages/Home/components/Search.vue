@@ -1,9 +1,13 @@
 <template>
   <div class="search">
     <el-autocomplete
+      v-model="searchText"
+      :fetch-suggestions="querySearchAsync"
+      :trigger-on-focus="false"
       class="autocomplete"
       popper-class="my-autocomplete"
       placeholder="点击搜索医院"
+      @select="handleSelect"
     >
       <template #prefix>
         <el-icon class="el-input__icon">
@@ -17,6 +21,45 @@
 
 <script setup lang="ts">
 import { Search } from "@element-plus/icons-vue";
+import { onMounted, ref } from "vue";
+import { HospitalContentType } from "@/types/modules/home";
+import { searchHospitalAPI } from "@/apis/home";
+
+/** 搜索关键字 */
+const searchText = ref<string>("");
+/** 医院列表 */
+const searchHospitalList = ref<HospitalContentType[]>([]);
+/** 获取搜索联想列表 */
+const getSearchHospital = async () => {
+  if (!searchText.value) return;
+  let response = await searchHospitalAPI(searchText.value);
+  searchHospitalList.value = response.data;
+};
+
+let timeout: ReturnType<typeof setTimeout>;
+const querySearchAsync = async (
+  queryString: string,
+  cb: (arg: any) => void
+) => {
+  await getSearchHospital();
+  const results = queryString
+    ? searchHospitalList.value.filter(createFilter(queryString))
+    : searchHospitalList.value;
+
+  results.forEach((result) => {
+    result["value"] = result.hosname;
+  });
+  clearTimeout(timeout);
+  timeout = setTimeout(() => {
+    cb(results);
+  }, 300 * Math.random());
+};
+const createFilter = (queryString: string) => {
+  return (restaurant: HospitalContentType) => {
+    return restaurant.hosname.indexOf(queryString) === 0;
+  };
+};
+const handleSelect = () => {};
 </script>
 
 <script lang="ts">

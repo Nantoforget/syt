@@ -14,10 +14,9 @@
 .app {
   .main {
     width: 1200px;
-    min-height: 800px;
+    //min-height: 800px;
     margin: 70px auto;
-    box-sizing: content-box;
-    padding-bottom: 70px;
+    box-sizing: border-box !important;
   }
 }
 </style>

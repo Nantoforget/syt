@@ -14,6 +14,7 @@ export interface LevelAndDistrictType {
 
 /**home医院列表数据类型*/
 export interface HospitalContentType {
+  value?: string;
   address: string;
   bookingRule: BookingRuleType;
   cityCode: string;

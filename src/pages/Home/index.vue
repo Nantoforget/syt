@@ -31,6 +31,8 @@ export default {
 <style scoped lang="scss">
 .home {
   width: 1200px;
+  padding-bottom: 60px;
+  box-sizing: border-box;
   .carousel {
     width: 100%;
   }
