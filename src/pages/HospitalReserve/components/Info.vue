@@ -1,7 +1,7 @@
 <template>
   <div class="hos_info">
     <div class="text">
-      <div class="title">北京人民医院</div>
+      <div class="title">{{ hospitalInfo.hospital.hosname }}</div>
       <div class="level">
         <svg
           t="1712415016084"
@@ -29,13 +29,13 @@
             p-id="4297"
           ></path>
         </svg>
-        三级甲等
+        {{ hospitalInfo.hospital.param?.hostypeString }}
       </div>
     </div>
     <div class="rule">
       <div class="img">
         <img
-          src="https://img-baofun.zhhainiao.com/pcwallpaper_ugc/static/321a55a420f61d0a413cf11bd4cd6360.jpg?x-oss-process=image%2fresize%2cm_lfit%2cw_1920%2ch_1080"
+          :src="'data:image/jpeg;base64,' + hospitalInfo.hospital.logoData"
           alt=""
         />
       </div>
@@ -45,15 +45,19 @@
           <div class="hosTime">
             <div>
               <span class="time_text">预约周期：</span>
-              <span class="time">10天</span>
+              <span class="time">{{ hospitalInfo.bookingRule.cycle }}天</span>
             </div>
             <div>
               <span class="time_text">放号时间：</span>
-              <span class="time">08:30</span>
+              <span class="time">
+                {{ hospitalInfo.bookingRule.releaseTime }}
+              </span>
             </div>
             <div>
               <span class="time_text">停挂时间：</span>
-              <span class="time">11:30</span>
+              <span class="time">
+                {{ hospitalInfo.bookingRule.stopTime }}
+              </span>
             </div>
           </div>
           <div>
@@ -64,9 +68,11 @@
         <div class="subscribe">
           <div class="title">医院预约规则</div>
           <ul>
-            <li>西院区预约号取号地点：西院区门诊楼一层大厅挂号窗口取号</li>
-            <li>
-              东院区预约号取号地点：东院区老门诊楼一层大厅挂号窗口或新门诊楼各楼层挂号/收费窗口取号
+            <li
+              v-for="(item, index) in hospitalInfo.bookingRule.rule"
+              :key="index"
+            >
+              {{ item }}
             </li>
           </ul>
         </div>
@@ -75,7 +81,19 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import type {
+  BookingRuleType,
+  HospitalContentType
+} from "@/types/modules/home";
+
+defineProps<{
+  hospitalInfo: {
+    bookingRule: BookingRuleType;
+    hospital: HospitalContentType;
+  };
+}>();
+</script>
 
 <script lang="ts">
 export default {
@@ -121,15 +139,8 @@ export default {
       flex: 1;
       height: 100%;
       margin-top: 5px;
-      font-family:
-        Helvetica Neue,
-        Helvetica,
-        Arial,
-        PingFang SC,
-        Hiragino Sans GB,
-        Heiti SC,
-        Microsoft YaHei,
-        WenQuanYi Micro Hei,
+      font-family: Helvetica Neue, Helvetica, Arial, PingFang SC,
+        Hiragino Sans GB, Heiti SC, Microsoft YaHei, WenQuanYi Micro Hei,
         sans-serif;
       .registration {
         margin-bottom: 20px;

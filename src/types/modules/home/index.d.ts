@@ -16,7 +16,7 @@ export interface LevelAndDistrictType {
 export interface HospitalContentType {
   value?: string;
   address: string;
-  bookingRule: BookingRuleType;
+  bookingRule: BookingRuleType | null;
   cityCode: string;
   createTime: string;
   districtCode: string;

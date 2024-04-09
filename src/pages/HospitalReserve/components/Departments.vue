@@ -3,27 +3,49 @@
     <el-affix :offset="120">
       <div class="title">选择科室</div>
       <div class="name">
-        <div class="my-link active">国际医疗不</div>
-        <div class="my-link" v-for="inte in 8">妇产科</div>
+        <div
+          class="my-link"
+          :class="{ active: depActive === index }"
+          v-for="(dep, index) in departmentList"
+          :key="dep.depcode"
+          @click="changeDep(index)"
+        >
+          {{ dep.depname }}
+        </div>
       </div>
     </el-affix>
     <div class="list">
-      <div class="item checked_item">
-        <div class="item_title">专科</div>
+      <div
+        class="item checked_item"
+        v-for="deps in departmentList"
+        :key="deps.depcode"
+      >
+        <div class="item_title">{{ deps.depname }}</div>
         <div class="items">
-          <div class="my-link" v-for="item in 21">多发性硬性专科门诊</div>
-        </div>
-      </div>
-      <div class="item" v-for="inte in 6">
-        <div class="item_title">专科</div>
-        <div class="items">
-          <div class="my-link" v-for="item in 21">多发性硬性专科门诊</div>
+          <div class="my-link" v-for="dep in deps.children" :key="dep.depcode">
+            {{ dep.depname }}
+          </div>
         </div>
       </div>
     </div>
   </div>
 </template>
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import type { DepartmentsType } from "@/types/modules/detail";
+import { ref } from "vue";
+
+/** 从父组件接受的科室列表 */
+const props = defineProps<{
+  departmentList: DepartmentsType[];
+}>();
+
+/** 选中科室，默认选中第一个 */
+let depActive = ref<number>(0);
+/** 选中科室,修改保存的下标 */
+const changeDep = (index: number) => {
+  depActive.value = index;
+};
+</script>
 
 <script lang="ts">
 export default {
@@ -37,16 +59,8 @@ export default {
   height: 100%;
   margin-top: 50px;
   display: flex;
-  font-family:
-    Helvetica Neue,
-    Helvetica,
-    Arial,
-    PingFang SC,
-    Hiragino Sans GB,
-    Heiti SC,
-    Microsoft YaHei,
-    WenQuanYi Micro Hei,
-    sans-serif;
+  font-family: Helvetica Neue, Helvetica, Arial, PingFang SC, Hiragino Sans GB,
+    Heiti SC, Microsoft YaHei, WenQuanYi Micro Hei, sans-serif;
   .title {
     font-size: 16px;
     color: #333;

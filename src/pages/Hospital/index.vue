@@ -1,8 +1,14 @@
 <template>
   <div class="hos_content">
     <div class="left_list">
-      <div class="list text my-link active">预约挂号</div>
-      <div v-for="item in 4" class="list text my-link">预约挂号</div>
+      <div
+        v-for="tab in tabs"
+        class="list text my-link"
+        :class="{ active: activeName === tab.name }"
+        @click="goTo(tab.name)"
+      >
+        {{ tab.title }}
+      </div>
     </div>
     <div class="right_info">
       <RouterView />
@@ -10,7 +16,51 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+
+interface TabsType {
+  title: string;
+  name: string;
+}
+const tabs: TabsType[] = [
+  {
+    title: "预约挂号",
+    name: "Reserve"
+  },
+  {
+    title: "医院详情",
+    name: "Detail"
+  },
+  {
+    title: "预约须知",
+    name: "Notice"
+  },
+  {
+    title: "停诊信息",
+    name: "Stop"
+  },
+  {
+    title: "查询/取消",
+    name: "Query"
+  }
+];
+
+/** 选中tab，默认为第一项 */
+const activeName = ref<string>(tabs[0].name);
+/** 跳转页面 */
+const goTo = (name: string) => {
+  if (name === "Stop") return;
+  if (name === "Query") return;
+  /** 切换tab */
+  activeName.value = name;
+  /** 跳转页面 */
+  router.push({ name });
+};
+</script>
 
 <script lang="ts">
 export default {
@@ -50,7 +100,7 @@ export default {
         display: inline-block;
         width: 10px;
         height: 10px;
-        background: blue;
+        background: #4490f1;
         position: absolute;
         top: 2px;
         left: -20px;

@@ -168,9 +168,8 @@ const changeDistrict = (value: string) => {
   districtValue.value = value;
   getHomeHospital();
 };
-
-const goToHospital = (hoscode) => {
-  console.log(hoscode);
+/** 跳转医院详情页 */
+const goToHospital = (hoscode: string) => {
   router.push(`/hospital/${hoscode}`);
 };
 
@@ -193,16 +192,8 @@ export default {
     font-size: 16px;
     font-weight: bold;
     margin: 30px 0;
-    font-family:
-      Helvetica Neue,
-      Helvetica,
-      Arial,
-      PingFang SC,
-      Hiragino Sans GB,
-      Heiti SC,
-      Microsoft YaHei,
-      WenQuanYi Micro Hei,
-      sans-serif;
+    font-family: Helvetica Neue, Helvetica, Arial, PingFang SC, Hiragino Sans GB,
+      Heiti SC, Microsoft YaHei, WenQuanYi Micro Hei, sans-serif;
   }
   .check {
     display: flex;
