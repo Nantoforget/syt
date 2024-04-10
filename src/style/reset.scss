@@ -185,10 +185,10 @@ pre {
   font-size: 1em;
 }
 .my-link{
-  cursor: pointer;
+  cursor: pointer !important;
 }
 .my-link:hover{
-  color:#7eabff;
+  color:#7eabff !important;
 }
 .text{
   font-family: Helvetica Neue,Helvetica,Arial,PingFang SC,Hiragino Sans GB,Heiti SC,Microsoft YaHei,WenQuanYi Micro Hei,sans-serif;

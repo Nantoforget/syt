@@ -35,7 +35,11 @@
     <div class="rule">
       <div class="img">
         <img
-          :src="'data:image/jpeg;base64,' + hospitalInfo.hospital.logoData"
+          :src="
+            hospitalInfo.hospital.logoData
+              ? `data:image/jpeg;base64, ${hospitalInfo.hospital.logoData} `
+              : 'https://pic3.zhimg.com/v2-580f56de9cd8175a3304bfc5aa9228f2_r.jpg?source=1940ef5c'
+          "
           alt=""
         />
       </div>
@@ -139,8 +143,15 @@ export default {
       flex: 1;
       height: 100%;
       margin-top: 5px;
-      font-family: Helvetica Neue, Helvetica, Arial, PingFang SC,
-        Hiragino Sans GB, Heiti SC, Microsoft YaHei, WenQuanYi Micro Hei,
+      font-family:
+        Helvetica Neue,
+        Helvetica,
+        Arial,
+        PingFang SC,
+        Hiragino Sans GB,
+        Heiti SC,
+        Microsoft YaHei,
+        WenQuanYi Micro Hei,
         sans-serif;
       .registration {
         margin-bottom: 20px;

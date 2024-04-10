@@ -17,40 +17,18 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
+import { useHospitalDetailStore } from "@/store/modules/HospitalDetail.ts";
+import { storeToRefs } from "pinia";
+import { onMounted } from "vue";
 
 const router = useRouter();
+const route = useRoute();
 
-interface TabsType {
-  title: string;
-  name: string;
-}
-const tabs: TabsType[] = [
-  {
-    title: "预约挂号",
-    name: "Reserve"
-  },
-  {
-    title: "医院详情",
-    name: "Detail"
-  },
-  {
-    title: "预约须知",
-    name: "Notice"
-  },
-  {
-    title: "停诊信息",
-    name: "Stop"
-  },
-  {
-    title: "查询/取消",
-    name: "Query"
-  }
-];
-
-/** 选中tab，默认为第一项 */
-const activeName = ref<string>(tabs[0].name);
+const hosDetailStore = useHospitalDetailStore();
+const { hosCode, activeName } = storeToRefs(hosDetailStore);
+const { getHospitalAppointment, getHospitalDepartment } = hosDetailStore;
+const { tabs } = hosDetailStore;
 /** 跳转页面 */
 const goTo = (name: string) => {
   if (name === "Stop") return;
@@ -60,6 +38,13 @@ const goTo = (name: string) => {
   /** 跳转页面 */
   router.push({ name });
 };
+onMounted(() => {
+  /** 从路由获取hoscode */
+  hosCode.value = route.params.hoscode as string;
+  /** 页面刷新根据路由获取tab选项 */
+  activeName.value = route.name!;
+  Promise.all([getHospitalAppointment(), getHospitalDepartment()]);
+});
 </script>
 
 <script lang="ts">

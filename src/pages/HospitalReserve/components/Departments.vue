@@ -1,23 +1,30 @@
 <template>
   <div class="departments">
-    <el-affix :offset="120">
+    <el-affix :offset="70">
       <div class="title">选择科室</div>
-      <div class="name">
-        <div
-          class="my-link"
-          :class="{ active: depActive === index }"
-          v-for="(dep, index) in departmentList"
-          :key="dep.depcode"
-          @click="changeDep(index)"
-        >
-          {{ dep.depname }}
+      <el-scrollbar height="500px">
+        <div class="name">
+          <div
+            class="my-link"
+            :class="{ active: depActive === index }"
+            v-for="(dep, index) in departmentList"
+            :key="dep.depcode"
+            @click="changeDep(index)"
+          >
+            {{ dep.depname }}
+          </div>
         </div>
-      </div>
+      </el-scrollbar>
     </el-affix>
-    <div class="list">
+
+    <div id="list" class="list">
+      <el-affix :offset="70">
+        <div class="line"></div>
+      </el-affix>
       <div
-        class="item checked_item"
-        v-for="deps in departmentList"
+        class="item"
+        :class="{ checked_item: depActive === index }"
+        v-for="(deps, index) in departmentList"
         :key="deps.depcode"
       >
         <div class="item_title">{{ deps.depname }}</div>
@@ -35,7 +42,7 @@ import type { DepartmentsType } from "@/types/modules/detail";
 import { ref } from "vue";
 
 /** 从父组件接受的科室列表 */
-const props = defineProps<{
+defineProps<{
   departmentList: DepartmentsType[];
 }>();
 
@@ -57,26 +64,33 @@ export default {
 .departments {
   width: 100%;
   height: 100%;
-  margin-top: 50px;
+  padding-bottom: 70px;
   display: flex;
-  font-family: Helvetica Neue, Helvetica, Arial, PingFang SC, Hiragino Sans GB,
-    Heiti SC, Microsoft YaHei, WenQuanYi Micro Hei, sans-serif;
+  font-family:
+    Helvetica Neue,
+    Helvetica,
+    Arial,
+    PingFang SC,
+    Hiragino Sans GB,
+    Heiti SC,
+    Microsoft YaHei,
+    WenQuanYi Micro Hei,
+    sans-serif;
   .title {
     font-size: 16px;
     color: #333;
     font-weight: bold;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
+    margin-top: 50px;
   }
 
   .name {
     width: 150px;
-    height: 370px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 10px 10px 10px 0;
-    margin-right: 30px;
+    padding: 10px 0 10px 0;
     background: #f4f9ff;
 
     div {
@@ -96,19 +110,24 @@ export default {
       background: #fff;
     }
   }
-  .name:hover {
-    overflow-y: auto;
-    ::-webkit-scrollbar {
-      width: 10px;
-    }
-  }
+
   .list {
     flex: 1;
-    margin-top: 50px;
+    margin: 0 0 0 30px;
+    height: 500px;
+    .line {
+      width: 100%;
+      height: 80px;
+      background: #fff;
+    }
+    .item:last-child {
+      padding-bottom: 70px;
+    }
     .item {
       width: 100%;
       padding: 0 0 10px 20px;
       margin-bottom: 20px;
+      overflow: hidden;
       .item_title {
         color: #333;
         font-size: 14px;

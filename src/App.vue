@@ -5,10 +5,13 @@
       <RouterView />
     </div>
     <HospitalBottom></HospitalBottom>
+    <Login />
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import Login from "@/components/Login/index.vue";
+</script>
 
 <style scoped lang="scss">
 .app {
