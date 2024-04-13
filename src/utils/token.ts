@@ -11,6 +11,7 @@ const getToken = () => {
 const setToken = (token: string) => {
   localStorage.setItem("TOKEN", token);
 };
+
 /**
  * 清除本地token
  */

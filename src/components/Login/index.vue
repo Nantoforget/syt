@@ -44,7 +44,7 @@
                 <el-button
                   :disabled="authCode !== 0"
                   style="height: 35px; z-index: 9"
-                  @click="getAuthCode"
+                  @click="getAuthCode()"
                 >
                   获取验证码
                   <el-button
@@ -201,20 +201,39 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, nextTick } from "vue";
-import type { FormInstance, FormRules } from "element-plus";
+import { ref, reactive } from "vue";
+import { FormInstance, FormRules } from "element-plus";
 import { Lock, User } from "@element-plus/icons-vue";
-
 import { useUserInfoStore } from "@/store/modules/userInfo.ts";
 import { storeToRefs } from "pinia";
+import { getAuthCodeApi, userLoginApi } from "@/apis/user";
+const userInfoStore = useUserInfoStore();
 /** 是否显示drawer */
-const { isDrawer } = storeToRefs(useUserInfoStore());
+const { isDrawer } = storeToRefs(userInfoStore);
+const { userLogin } = userInfoStore;
 /** 验证码倒计时 */
 const authCode = ref<number>(0);
 /** 保存定时器函数 */
-let timer = null;
+let timer: any = null;
 /** 获取验证码 */
 const getAuthCode = () => {
+  if (!isTrueForUserName.value) {
+    ElMessage({
+      type: "error",
+      message: "请输入正确的手机号"
+    });
+    return;
+  }
+  getUserCode(ruleForm.username);
+  codeCountDown();
+};
+/** 发送请求在线获取验证码 */
+const getUserCode = async (phone: string) => {
+  let response = await getAuthCodeApi(phone);
+  ruleForm.pass = response.data;
+};
+/** 发送验证码倒计时 */
+const codeCountDown = () => {
   /** 修改倒计时，30秒 */
   authCode.value = 30;
   /** 倒计时开始 */
@@ -235,17 +254,21 @@ const ruleForm = reactive({
   /** 验证码 */
   pass: ""
 });
-/** form表单用户手机号，验证码的验证函数 */
+const isTrueForUserName = ref<boolean>(false);
+/** form表单用户手机号的验证函数 */
+const validateUsername = (rule: any, value: any, callback: any) => {
+  const valReg = new RegExp(/^(?:(?:\+|00)86)?1[3-9]\d{9}$/);
+  isTrueForUserName.value = valReg.test(value);
+  if (isTrueForUserName.value) {
+    callback();
+  } else {
+    callback(new Error("请输入正确的手机号"));
+  }
+};
+/** form表单用户验证码的验证函数 */
 const validatePass = (rule: any, value: any, callback: any) => {
-  let str = "";
-  if (rule.field === "username") {
-    str = "请输入手机号";
-  }
-  if (rule.field === "pass") {
-    str = "请输入验证码";
-  }
   if (value === "") {
-    callback(new Error(str));
+    callback(new Error("请输入验证码"));
   } else {
     callback();
   }
@@ -256,15 +279,15 @@ const rules = reactive<FormRules<typeof ruleForm>>({
     {
       pattern: /^(?:(?:\+|00)86)?1[3-9]\d{9}$/,
       message: "请输入正确的手机号",
-      trigger: "change"
+      trigger: "blur"
     },
-    { validator: validatePass, trigger: "blur" }
+    { validator: validateUsername, trigger: "blur" }
   ],
   pass: [
     {
       pattern: /^\d{6}$/,
-      message: "验证码必须是6位数数字",
-      trigger: "change"
+      message: "请输入正确的验证码(6位数字)",
+      trigger: "blur"
     },
     { validator: validatePass, trigger: "blur" }
   ]
@@ -282,13 +305,24 @@ const isLogging = ref<boolean>(true);
 const login = (formEl: FormInstance | undefined) => {
   /** 验证form表单是否全部符合 */
   if (!formEl) return;
-  formEl.validate((valid) => {
+  formEl.validate(async (valid) => {
     if (valid) {
       /** 显示正在登录中 */
       isLogging.value = false;
-      console.log("submit!");
+      const [code] = await Promise.all([userLogin(ruleForm)]);
+      if (code === 200) {
+        ElMessage({
+          type: "success",
+          message: "登录成功"
+        });
+        /** 关闭drawer */
+        isDrawer.value = false;
+      } else {
+        console.log(123);
+        ElMessage.warning({ message: "登录失败，请重新登录" });
+      }
+      clear();
     } else {
-      console.log("error submit!");
       return false;
     }
   });
@@ -296,11 +330,17 @@ const login = (formEl: FormInstance | undefined) => {
 
 /** 关闭drawer的回调 */
 const closeDrawer = () => {
+  clear();
+  if (!ruleFormRef.value) return;
+  ruleFormRef.value.resetFields();
   /** 关闭drawer */
   isDrawer.value = false;
+};
+
+/** 清除数据 */
+const clear = () => {
   /** 清除输入框数据 */
-  ruleForm.pass = "";
-  ruleForm.username = "";
+  Object.assign(ruleForm, { pass: "", username: "" });
   /** 恢复默认的登录方式 */
   isShow.value = "iphone";
   /** 清除定时器 */
@@ -309,8 +349,6 @@ const closeDrawer = () => {
   authCode.value = 0;
   /** 显示登录按钮 */
   isLogging.value = true;
-  if (!ruleFormRef.value) return;
-  ruleFormRef.value.resetFields();
 };
 
 /** qrCode的数据类型 */

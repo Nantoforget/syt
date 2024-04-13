@@ -29,7 +29,12 @@
       >
         <div class="item_title">{{ deps.depname }}</div>
         <div class="items">
-          <div class="my-link" v-for="dep in deps.children" :key="dep.depcode">
+          <div
+            class="my-link"
+            v-for="dep in deps.children"
+            @click="goToDepartment(dep.depcode)"
+            :key="dep.depcode"
+          >
             {{ dep.depname }}
           </div>
         </div>
@@ -40,17 +45,48 @@
 <script setup lang="ts">
 import type { DepartmentsType } from "@/types/modules/detail";
 import { ref } from "vue";
+import { useHospitalDetailStore } from "@/store/modules/HospitalDetail.ts";
+import { storeToRefs } from "pinia";
+import { useRouter } from "vue-router";
+import { getToken } from "@/utils";
+import { useUserInfoStore } from "@/store/modules/userInfo.ts";
 
 /** 从父组件接受的科室列表 */
 defineProps<{
   departmentList: DepartmentsType[];
 }>();
 
+const router = useRouter();
+
+/** 获取医院的store */
+const hosStore = useHospitalDetailStore();
+/** 结构出医院的hoscode */
+const { hosCode } = storeToRefs(hosStore);
+
 /** 选中科室，默认选中第一个 */
 let depActive = ref<number>(0);
 /** 选中科室,修改保存的下标 */
 const changeDep = (index: number) => {
   depActive.value = index;
+};
+
+/**
+ * 点击科室获取科室code和医院code并跳转
+ * @param depcode 科室code
+ */
+const goToDepartment = (depcode: string) => {
+  console.log(depcode);
+  console.log(hosCode.value);
+  if (getToken()) {
+    router.push({
+      name: "Schedule",
+      query: { hosCode: hosCode.value, depcode: depcode }
+    });
+    return;
+  }
+  const userInfoStore = useUserInfoStore();
+  const { isDrawer } = storeToRefs(userInfoStore);
+  isDrawer.value = true;
 };
 </script>
 

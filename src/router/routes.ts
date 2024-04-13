@@ -24,6 +24,11 @@ const routes = [
         path: "/hospital/notice/:hoscode",
         component: () => import("@/pages/HospitalNotice/index.vue"),
         name: "Notice"
+      },
+      {
+        path: "/hospital/schedule",
+        component: () => import("@/pages/HospitalSchedule/index.vue"),
+        name: "Schedule"
       }
     ]
   },

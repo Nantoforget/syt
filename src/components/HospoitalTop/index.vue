@@ -13,13 +13,15 @@
         </el-input>
       </div>
       <div class="top-right">
-        <div class="help my-link">帮助中心</div>
-        <div v-if="!isLogin" class="login my-link" @click="goLogin">
+        <div class="help my-link" @click="$router.push({ name: 'Test' })">
+          帮助中心
+        </div>
+        <div v-if="!userInfo.token" class="login my-link" @click="goLogin">
           登录/注册
         </div>
         <el-menu v-else :ellipsis="false" mode="horizontal">
           <el-sub-menu index="1">
-            <template #title>13412345678</template>
+            <template #title>{{ userInfo.name }}</template>
             <el-menu-item index="1-1">实名认证</el-menu-item>
             <el-menu-item index="1-2">挂号订单</el-menu-item>
             <el-menu-item index="1-3">就诊人管理</el-menu-item>
@@ -35,21 +37,21 @@ import { Search } from "@element-plus/icons-vue";
 import { useRouter } from "vue-router";
 import { useUserInfoStore } from "@/store/modules/userInfo.ts";
 import { storeToRefs } from "pinia";
-import { ref } from "vue";
 
+/** 是否打开登录组件 */
 const { isDrawer } = storeToRefs(useUserInfoStore());
+/** 用户信息 */
+const { userInfo } = useUserInfoStore();
 
 const router = useRouter();
 /** 点击图标返回首页 */
 const goToHome = () => {
-  router.push("/home");
+  router.push({ name: "Home" });
 };
 /** 点击登录显示登录页面 */
 const goLogin = () => {
   isDrawer.value = true;
 };
-/** 是否登录的标识 */
-const isLogin = ref<boolean>(false);
 </script>
 
 <script lang="ts">

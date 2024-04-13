@@ -16,3 +16,11 @@ export enum DetailApiUrl {
   /**科室列表地址 */
   DetailDepartmentApiUrl = "/hosp/hospital/department"
 }
+
+/** 用户登录请求路径 */
+export enum UserApiUrl {
+  /** 验证码路径 */
+  UserAuthCodeUrl = "/sms/send",
+  /** 用户登录路径 */
+  UserLoginUrl = "/user/login"
+}
