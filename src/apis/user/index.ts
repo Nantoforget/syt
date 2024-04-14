@@ -24,3 +24,24 @@ export interface userInfoType {
   name: string;
   token: string;
 }
+/** 获取会员信息 */
+export const getUserInfoApi = () => {
+  return request.get<any, ResDataType<VipUserInfoType>>(UserApiUrl.UserInfoUrl);
+};
+/** 会员信息数据类型 */
+export interface VipUserInfoType {
+  authStatus: number;
+  certificatesNo: string;
+  certificatesType: string;
+  certificatesUrl: string;
+  createTime: string;
+  id: number;
+  isDeleted: number;
+  name: string;
+  nickName: string | null;
+  openid: null | number;
+  param: {};
+  phone: string;
+  status: number;
+  updateTime: string;
+}

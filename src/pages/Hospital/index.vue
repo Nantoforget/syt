@@ -36,13 +36,18 @@ const goTo = (name: string) => {
   /** 切换tab */
   activeName.value = name;
   /** 跳转页面 */
-  router.push({ name });
+  router.push({ name, params: { hoscode: hosCode.value } });
 };
 onMounted(() => {
-  /** 从路由获取hoscode */
-  hosCode.value = route.params.hoscode as string;
-  /** 页面刷新根据路由获取tab选项 */
-  activeName.value = route.name!;
+  if (route.name === "Schedule") {
+    activeName.value = "Reserve";
+  } else {
+    /** 从路由获取hoscode */
+    hosCode.value = route.params.hoscode as string;
+    /** 页面刷新根据路由获取tab选项 */
+    activeName.value = route.name!;
+  }
+
   Promise.all([getHospitalAppointment(), getHospitalDepartment()]);
 });
 </script>
@@ -59,6 +64,7 @@ export default {
   height: 100%;
   display: flex;
   margin-top: 100px;
+  padding-bottom: 50px;
   .left_list {
     width: 20%;
     height: 100%;

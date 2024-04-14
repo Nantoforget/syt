@@ -4,7 +4,7 @@ import { ref, reactive } from "vue";
 import {
   getHospitalAppointmentAPI,
   getHospitalDepartmentAPI
-} from "@/apis/detail";
+} from "@/apis/hospital";
 import type {
   HospitalContentType,
   BookingRuleType

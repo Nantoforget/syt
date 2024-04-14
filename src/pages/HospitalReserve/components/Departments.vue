@@ -48,8 +48,6 @@ import { ref } from "vue";
 import { useHospitalDetailStore } from "@/store/modules/HospitalDetail.ts";
 import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
-import { getToken } from "@/utils";
-import { useUserInfoStore } from "@/store/modules/userInfo.ts";
 
 /** 从父组件接受的科室列表 */
 defineProps<{
@@ -60,6 +58,7 @@ const router = useRouter();
 
 /** 获取医院的store */
 const hosStore = useHospitalDetailStore();
+
 /** 结构出医院的hoscode */
 const { hosCode } = storeToRefs(hosStore);
 
@@ -75,18 +74,10 @@ const changeDep = (index: number) => {
  * @param depcode 科室code
  */
 const goToDepartment = (depcode: string) => {
-  console.log(depcode);
-  console.log(hosCode.value);
-  if (getToken()) {
-    router.push({
-      name: "Schedule",
-      query: { hosCode: hosCode.value, depcode: depcode }
-    });
-    return;
-  }
-  const userInfoStore = useUserInfoStore();
-  const { isDrawer } = storeToRefs(userInfoStore);
-  isDrawer.value = true;
+  router.push({
+    name: "Schedule",
+    query: { hosCode: hosCode.value, depcode: depcode }
+  });
 };
 </script>
 

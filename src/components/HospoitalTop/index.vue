@@ -25,7 +25,9 @@
             <el-menu-item index="1-1">实名认证</el-menu-item>
             <el-menu-item index="1-2">挂号订单</el-menu-item>
             <el-menu-item index="1-3">就诊人管理</el-menu-item>
-            <el-menu-item index="1-4">退出登录</el-menu-item>
+            <el-menu-item index="1-4" @click="userLogout">
+              退出登录
+            </el-menu-item>
           </el-sub-menu>
         </el-menu>
       </div>
@@ -41,12 +43,19 @@ import { storeToRefs } from "pinia";
 /** 是否打开登录组件 */
 const { isDrawer } = storeToRefs(useUserInfoStore());
 /** 用户信息 */
-const { userInfo } = useUserInfoStore();
+const { userInfo, logout } = useUserInfoStore();
 
 const router = useRouter();
+
 /** 点击图标返回首页 */
 const goToHome = () => {
   router.push({ name: "Home" });
+};
+/** 用户退出登录 */
+const userLogout = () => {
+  logout();
+  /** 刷新路由 */
+  router.go(0);
 };
 /** 点击登录显示登录页面 */
 const goLogin = () => {

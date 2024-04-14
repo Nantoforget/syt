@@ -12,7 +12,7 @@ import router from "@/router";
 import HospitalTop from "@/components/HospoitalTop/index.vue";
 import HospitalBottom from "@/components/HospoitalBottom/index.vue";
 import store from "@/store";
-
+import "@/permission";
 const app = createApp(App);
 
 app.component("HospitalTop", HospitalTop);
