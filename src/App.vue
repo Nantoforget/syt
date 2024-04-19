@@ -17,7 +17,6 @@ import Login from "@/components/Login/index.vue";
 .app {
   .main {
     width: 1200px;
-    //min-height: 800px;
     margin: 70px auto;
     box-sizing: border-box !important;
   }

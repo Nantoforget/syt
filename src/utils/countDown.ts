@@ -7,8 +7,8 @@ const countDown = ({ workDate, data }: { workDate: string; data: string }) => {
   // 返回需要的数据
   return {
     // day: parseInt(reduce_ms / 1000 / 3600 / 24),
-    hour: parseInt((reduce_ms / 1000 / 3600) % 24),
-    min: parseInt((reduce_ms / 1000 / 60) % 60),
+    hour: parseInt(String((reduce_ms / 1000 / 3600) % 24)),
+    min: parseInt(String((reduce_ms / 1000 / 60) % 60)),
     sec: Math.round((reduce_ms / 1000) % 60)
   };
 };

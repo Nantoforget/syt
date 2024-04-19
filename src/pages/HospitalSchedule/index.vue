@@ -26,8 +26,9 @@
     <div class="page">
       <el-pagination
         layout="prev, pager, next"
-        @current-change="(value) => changePage(value)"
+        @current-change="(value: number) => changePage(value)"
         :total="total"
+        :page-size="7"
       />
     </div>
   </div>
@@ -70,13 +71,18 @@
   </div>
   <div class="count_down" v-else>
     <div class="title">
-      <span>明天</span>
+      <span
+        v-if="timeData.hour > 8 || (timeData.hour === 8 && timeData.min >= 30)"
+      >
+        明天
+      </span>
+      <span v-else>今天</span>
       <div>08:30</div>
       <span>放号</span>
     </div>
     <div class="down">
       <span>倒计时</span>
-      <div clas="time" v-if="timeData.sec === -1">加载中。。。</div>
+      <div class="time" v-if="timeData.sec === -1">加载中。。。</div>
       <div class="time" v-else>
         {{ timeData.hour }} 时 {{ timeData.min }} 分 {{ timeData.sec }} 秒
       </div>
@@ -103,7 +109,7 @@ const { hosCode } = storeToRefs(hosDetailStore);
 const userInfoStore = useUserInfoStore();
 const { getUserInfo } = userInfoStore;
 /** 保存获取到的科室预约数据 */
-const scheduleDate = reactive<BookingRuleType>({});
+const scheduleDate = reactive<BookingRuleType>({} as BookingRuleType);
 /**  */
 const docDateList = <{ id: string; time: string; docDate: Doctor[] }[]>(
   reactive([
@@ -135,7 +141,6 @@ const changeItem = (index: number, book: BookingScheduleType) => {
   hasNum.value = book.status;
   getScheduleList(book.workDate);
   if (hasNum.value === 1) {
-    console.log(book);
     runCountDown(book);
   }
 };
@@ -159,15 +164,17 @@ const getBookingSchedule = async () => {
   let res = await getBookingScheduleApi({
     page: page.value,
     limit: 7,
-    hoscode: route.query.hosCode,
-    depcode: route.query.depcode
+    hoscode: route.query.hosCode as string,
+    depcode: route.query.depcode as string
   });
+  console.log(res.data);
   const one: BookingScheduleType = res.data.bookingScheduleList[0];
   hasNum.value = one.status;
   await getScheduleList(one.workDate);
   total.value = res.data.total;
   Object.assign(scheduleDate, res.data);
   isActive.value = 0;
+  console.log(total.value);
 };
 /**
  * 获取某一天的医生列表
@@ -178,8 +185,8 @@ const getScheduleList = async (workDate: string) => {
     item.docDate = [];
   });
   let res = await getScheduleApi({
-    hoscode: route.query.hosCode,
-    depcode: route.query.depcode,
+    hoscode: route.query.hosCode as string,
+    depcode: route.query.depcode as string,
     workDate
   });
 
@@ -214,7 +221,7 @@ const timeData = reactive<{ hour: number; min: number; sec: number }>({
   sec: -1
 });
 /** 存储定时器 */
-let timer = null;
+let timer: any = null;
 
 /**
  * 利用工具函数获取倒计时的时分秒

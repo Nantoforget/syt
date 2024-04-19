@@ -99,13 +99,20 @@ import type {
 } from "@/types/modules/home";
 import { useRouter } from "vue-router";
 
+/** 路由 */
 const router = useRouter();
 
+/** 当前页 */
 const currentPage = ref<number>(1);
+/** 每页条数 */
 const pageSize = ref<number>(10);
+/** 是否显示分页器 */
 const small = ref<boolean>(false);
+/** 是否显示背景色 */
 const background = ref<boolean>(true);
+/** 是否禁用分页器 */
 const disabled = ref<boolean>(false);
+/** 总条数 */
 const total = ref<number>(1);
 /**总页数*/
 const totalPages = ref<number>(1);
@@ -125,6 +132,7 @@ const getHomeDistrict = async () => {
   let res = await getHomeDistrictAPI();
   districtList.value = res.data;
 };
+
 /** 首页医院信息列表  */
 const hospitalList = ref<HospitalContentType[]>([]);
 /**获取home首页的医院信息*/
@@ -192,8 +200,16 @@ export default {
     font-size: 16px;
     font-weight: bold;
     margin: 30px 0;
-    font-family: Helvetica Neue, Helvetica, Arial, PingFang SC, Hiragino Sans GB,
-      Heiti SC, Microsoft YaHei, WenQuanYi Micro Hei, sans-serif;
+    font-family:
+      Helvetica Neue,
+      Helvetica,
+      Arial,
+      PingFang SC,
+      Hiragino Sans GB,
+      Heiti SC,
+      Microsoft YaHei,
+      WenQuanYi Micro Hei,
+      sans-serif;
   }
   .check {
     display: flex;
