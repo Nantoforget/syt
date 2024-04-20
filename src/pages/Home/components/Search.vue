@@ -21,9 +21,10 @@
 
 <script setup lang="ts">
 import { Search } from "@element-plus/icons-vue";
-import { onMounted, ref } from "vue";
+import { ref } from "vue";
 import { HospitalContentType } from "@/types/modules/home";
 import { searchHospitalAPI } from "@/apis/home";
+import router from "@/router";
 
 /** 搜索关键字 */
 const searchText = ref<string>("");
@@ -37,6 +38,7 @@ const getSearchHospital = async () => {
 };
 
 let timeout: ReturnType<typeof setTimeout>;
+
 const querySearchAsync = async (
   queryString: string,
   cb: (arg: any) => void
@@ -59,7 +61,18 @@ const createFilter = (queryString: string) => {
     return restaurant.hosname.indexOf(queryString) === 0;
   };
 };
-const handleSelect = () => {};
+/** 选择搜索结果 */
+const handleSelect = () => {
+  /*从searchHospitalList中找到与 searchText.value 匹配的医院*/
+  const hospital = searchHospitalList.value.find(
+    (hospital) => hospital.hosname === searchText.value
+  );
+  /*跳转到该医院的详情页面*/
+  router.push({
+    name: "Reserve",
+    params: { hoscode: hospital?.hoscode }
+  });
+};
 </script>
 
 <script lang="ts">
