@@ -206,7 +206,7 @@ import { FormInstance, FormRules } from "element-plus";
 import { Lock, User } from "@element-plus/icons-vue";
 import { useUserInfoStore } from "@/store/modules/userInfo.ts";
 import { storeToRefs } from "pinia";
-import { getAuthCodeApi, userLoginApi } from "@/apis/user";
+import { getAuthCodeApi } from "@/apis/user";
 const userInfoStore = useUserInfoStore();
 /** 是否显示drawer */
 const { isDrawer } = storeToRefs(userInfoStore);
@@ -256,7 +256,7 @@ const ruleForm = reactive({
 });
 const isTrueForUserName = ref<boolean>(false);
 /** form表单用户手机号的验证函数 */
-const validateUsername = (rule: any, value: any, callback: any) => {
+const validateUsername = (_rule: any, value: any, callback: any) => {
   const valReg = new RegExp(/^(?:(?:\+|00)86)?1[3-9]\d{9}$/);
   isTrueForUserName.value = valReg.test(value);
   if (isTrueForUserName.value) {
@@ -266,7 +266,7 @@ const validateUsername = (rule: any, value: any, callback: any) => {
   }
 };
 /** form表单用户验证码的验证函数 */
-const validatePass = (rule: any, value: any, callback: any) => {
+const validatePass = (_rule: any, value: any, callback: any) => {
   if (value === "") {
     callback(new Error("请输入验证码"));
   } else {

@@ -1,9 +1,12 @@
 import { request } from "@/utils";
 import { HomeApiUrl, HospitalApiUrl } from "@/apis";
-import type { HospitalContentType } from "@/types/modules/home";
+import type {
+  BookingRuleType,
+  HospitalContentType
+} from "@/types/modules/home";
 
-import type { DepartmentsType, BookingRuleType } from "@/types/modules/detail";
-import { Doctor } from "@/types/modules/detail";
+import type { DepartmentsType } from "@/types/modules/detail";
+import { BookingRuleTrueType, Doctor } from "@/types/modules/detail";
 
 /**
  * 预约挂号接口
@@ -13,7 +16,10 @@ import { Doctor } from "@/types/modules/detail";
 export const getHospitalAppointmentAPI = (hoscode: string) => {
   return request.get<
     any,
-    ResDataType<{ hospital: HospitalContentType; bookingRule: BookingRuleType }>
+    ResDataType<{
+      hospital: HospitalContentType;
+      bookingRule: BookingRuleType;
+    }>
   >(`${HomeApiUrl.HomePagesAndHosCodeAPI}/${hoscode}`);
 };
 /**
@@ -36,7 +42,7 @@ export const getHospitalDepartmentAPI = (hoscode: string) => {
  */
 export const getBookingScheduleApi = (params: BookingRuleParamsType) => {
   const { page, limit, hoscode, depcode } = params;
-  return request.get<any, ResDataType<BookingRuleType>>(
+  return request.get<any, ResDataType<BookingRuleTrueType>>(
     `${HospitalApiUrl.HospitalBookingScheduleApiUrl}/${page}/${limit}/${hoscode}/${depcode}`
   );
 };

@@ -11,7 +11,7 @@ interface ChildrenType {
 }
 
 /** 可预约排班数据类型 */
-export interface BookingRuleType {
+export interface BookingRuleTrueType {
   total: number;
   bookingScheduleList: BookingScheduleType[];
   baseMap: BaseMap;

@@ -86,10 +86,7 @@
 </template>
 
 <script setup lang="ts">
-import type {
-  BookingRuleType,
-  HospitalContentType
-} from "@/types/modules/home";
+import { BookingRuleType, HospitalContentType } from "@/types/modules/home";
 
 defineProps<{
   hospitalInfo: {

@@ -5,12 +5,10 @@ import {
   getHospitalAppointmentAPI,
   getHospitalDepartmentAPI
 } from "@/apis/hospital";
-import type {
-  HospitalContentType,
-  BookingRuleType
-} from "@/types/modules/home";
+import type { HospitalContentType } from "@/types/modules/home";
 import type { DepartmentsType } from "@/types/modules/detail";
 import { RouteRecordName } from "vue-router";
+import { BookingRuleType } from "@/types/modules/home";
 
 /** 医院详情仓库 */
 export const useHospitalDetailStore = defineStore("hospitalDetail", () => {

@@ -10,7 +10,7 @@
         </div>
       </div>
       <div class="dept-list">
-        <div class="dept-list__item" v-for="item in 12">神经内科</div>
+        <div class="dept-list__item" v-for="item in 12">神经内科{{ item }}</div>
       </div>
     </div>
     <div class="space">
@@ -24,7 +24,7 @@
       <div class="space-list">
         <div class="notice-wrapper" v-for="item in 3">
           <div class="point"></div>
-          <span>关于延长北京大学国关于延长北京大学国</span>
+          <span>关于延长北京大学国关于延长北京大学国{{ item }}</span>
         </div>
       </div>
     </div>
@@ -39,7 +39,7 @@
       <div class="space-list">
         <div class="notice-wrapper" v-for="item in 3">
           <div class="point"></div>
-          <span>关于延长北京大学国关于延长北京大学国</span>
+          <span>关于延长北京大学国关于延长北京大学国{{ item }}</span>
         </div>
       </div>
     </div>

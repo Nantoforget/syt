@@ -97,7 +97,7 @@ import { storeToRefs } from "pinia";
 import { useUserInfoStore } from "@/store/modules/userInfo.ts";
 import { getBookingScheduleApi, getScheduleApi } from "@/apis/hospital";
 import {
-  BookingRuleType,
+  BookingRuleTrueType,
   BookingScheduleType,
   Doctor
 } from "@/types/modules/detail";
@@ -109,7 +109,7 @@ const { hosCode } = storeToRefs(hosDetailStore);
 const userInfoStore = useUserInfoStore();
 const { getUserInfo } = userInfoStore;
 /** 保存获取到的科室预约数据 */
-const scheduleDate = reactive<BookingRuleType>({} as BookingRuleType);
+const scheduleDate = reactive<BookingRuleTrueType>({} as BookingRuleTrueType);
 /**  */
 const docDateList = <{ id: string; time: string; docDate: Doctor[] }[]>(
   reactive([
@@ -167,7 +167,6 @@ const getBookingSchedule = async () => {
     hoscode: route.query.hosCode as string,
     depcode: route.query.depcode as string
   });
-  console.log(res.data);
   const one: BookingScheduleType = res.data.bookingScheduleList[0];
   hasNum.value = one.status;
   await getScheduleList(one.workDate);
